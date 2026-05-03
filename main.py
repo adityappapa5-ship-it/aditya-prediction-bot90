@@ -3,15 +3,15 @@ from telebot import types
 from flask import Flask
 from threading import Thread
 
-# --- SERVER ---
+# --- SERVER FOR 24/7 ---
 app = Flask('')
 @app.route('/')
 def home(): return "ADITYA VIP ENGINE LIVE"
 def run(): app.run(host='0.0.0.0', port=int(os.environ.get('PORT', 8080)))
 
 # --- CONFIG ---
-API_TOKEN = '8618263406:AAHreGN69x_-g-_ZQ0VsieTWISgmxnCHBWo'
-CHANNELS = [-1003815161090, -1003973812867] # Tere Channels
+API_TOKEN = '8601172080:AAFyWgSRVZT9a4NfwjwYSlyC6-s-q1ipTXY' # NAYA TOKEN
+CHANNELS = [-1003815161090, -1003973812867]
 WIN_STICKER = 'CAACAgUAAxkBAAERJRhp9B-PkyNlzscUNGUAAUchyXw63g8AAisSAAJSEdhVkI_Ixu7liJU7BA'
 LOSS_STICKER = 'CAACAgUAAxkBAAERJRpp9B-X_XQ3vbejkVPLEIBkdKki-QACkBQAAiMYmVWHXHRU3FIjKzsE'
 API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json"
@@ -19,7 +19,6 @@ API_URL = "https://draw.ar-lottery01.com/WinGo/WinGo_1M/GetHistoryIssuePage.json
 bot = telebot.TeleBot(API_TOKEN)
 
 def check_user_joined(uid):
-    """Bina Join Kiye No Prediction"""
     for c in CHANNELS:
         try:
             status = bot.get_chat_member(c, uid).status
@@ -39,20 +38,20 @@ def start(m):
     if check_user_joined(m.from_user.id):
         markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
         markup.add(types.KeyboardButton("🔥 𝗔𝗖𝗧𝗜𝗩𝗔𝗧𝗘 𝗖𝗥𝗔𝗖𝗞 𝗘𝗡𝗚𝗜𝗡𝗘 🔥"))
-        bot.send_message(m.chat.id, "☠️ <b>𝕬𝕯𝕴𝕿𝖄𝕬 𝖁𝕴𝕻 𝕮𝕽𝕬𝕮𝕶</b> 💀\n\nStatus: <b>ACCESS GRANTED</b> ✅", parse_mode="HTML", reply_markup=markup)
+        bot.send_message(m.chat.id, "☠️ <b>𝕬𝕯𝕴𝕿𝖄𝕬 𝖁𝕴𝕻 𝕮𝕽𝕬𝕮𝕶</b> 💀\n\nStatus: <b>NEW TOKEN ACTIVE</b> ✅", parse_mode="HTML", reply_markup=markup)
     else:
         markup = types.InlineKeyboardMarkup(row_width=1)
         markup.add(
             types.InlineKeyboardButton("🚩 JOIN VIP CHANNEL 1", url="https://t.me/+45fCzXzXxi0zMWI9"),
             types.InlineKeyboardButton("🚩 JOIN VIP CHANNEL 2", url="https://t.me/+_RZ0gN9HU6xhZTRl"),
-            types.InlineKeyboardButton("✅ VERIFY JOIN", callback_data="verify")
+            types.InlineKeyboardButton("✅ VERIFY JOIN", callback_data="v")
         )
         bot.send_message(m.chat.id, "❌ <b>ACCESS LOCKED</b> ❌\nPehle Join Kar Madrachod!", parse_mode="HTML", reply_markup=markup)
 
-@bot.callback_query_handler(func=lambda c: c.data == "verify")
+@bot.callback_query_handler(func=lambda c: c.data == "v")
 def v(c):
     if check_user_joined(c.from_user.id):
-        bot.answer_callback_query(c.id, "Success! Press /start.")
+        bot.answer_callback_query(c.id, "Success! /start dabao.")
         start(c.message)
     else:
         bot.answer_callback_query(c.id, "Join kar pehle!", show_alert=True)
@@ -94,4 +93,4 @@ if __name__ == "__main__":
     Thread(target=run).start()
     bot.remove_webhook()
     bot.infinity_polling(timeout=60, long_polling_timeout=5)
-      
+    
